@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.ViewOptionsTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-03-07T23:04:22" hostname="LAPTOP-M9G0CM7F" time="0.044">
+  <properties/>
+  <testcase name="loginIndexIsOne()" classname="org.example.ViewOptionsTest" time="0.039"/>
+  <testcase name="loginIndexIsTwo()" classname="org.example.ViewOptionsTest" time="0.001"/>
+  <testcase name="loginIndexIsThree()" classname="org.example.ViewOptionsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

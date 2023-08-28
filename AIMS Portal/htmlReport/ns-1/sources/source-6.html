@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Main</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: Main (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Main</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96.1%
+  </span>
+  <span class="absValue">
+    (99/103)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;import java.util.*;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.*;
+&nbsp;import java.sql.DriverManager;
+&nbsp;
+<b class="fc">&nbsp;public class Main {</b>
+&nbsp;    public static void main(String[] args) {
+<b class="fc">&nbsp;        ConnectDB conn=new ConnectDB();</b>
+<b class="fc">&nbsp;        Connection c=conn.connect();</b>
+<b class="fc">&nbsp;        Scanner sc = new Scanner(System.in);</b>
+&nbsp;        int login_index;
+&nbsp;        do {
+<b class="fc">&nbsp;            System.out.println(&quot;&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Press 1 to login as Student&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Press 2 to login as Faculty&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Press 3 to login as Academic Office&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Press 0 to EXIT&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;&quot;);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;&quot;);</b>
+<b class="fc">&nbsp;            login_index = sc.nextInt();</b>
+&nbsp;
+<b class="fc">&nbsp;            if (login_index == 0) {</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Thank you for using AIMS portal&quot;);</b>
+&nbsp;                try{
+<b class="fc">&nbsp;                    c.close();</b>
+<b class="nc">&nbsp;                }catch(Exception e){</b>
+<b class="nc">&nbsp;                    System.out.println(e);</b>
+<b class="fc">&nbsp;                }</b>
+&nbsp;
+&nbsp;                return;
+&nbsp;            }
+<b class="fc">&nbsp;            if (login_index != 1 &amp;&amp; login_index != 2 &amp;&amp; login_index != 3) {</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Invalid input!&quot;);</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                String random = sc.nextLine();</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Login ID: &quot;);</b>
+<b class="fc">&nbsp;                String login_id = sc.nextLine();</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Password: &quot;);</b>
+<b class="fc">&nbsp;                String pass = sc.nextLine();</b>
+&nbsp;
+<b class="fc">&nbsp;                LoginUser newUser = new LoginUser();</b>
+<b class="fc">&nbsp;                int result = newUser.log(login_index, login_id, pass);</b>
+&nbsp;
+<b class="fc">&nbsp;                System.out.println(&quot;&quot;);</b>
+<b class="fc">&nbsp;                if (result == 1) {</b>
+&nbsp;
+<b class="fc">&nbsp;                    ViewOptions view = new ViewOptions();</b>
+&nbsp;                    int choice;
+&nbsp;                    do {
+<b class="fc">&nbsp;                        view.options(login_index);</b>
+&nbsp;
+<b class="fc">&nbsp;                        choice = sc.nextInt();</b>
+<b class="fc">&nbsp;                        random = sc.nextLine();</b>
+<b class="fc">&nbsp;                        if (choice == 0) {</b>
+<b class="fc">&nbsp;                            System.out.println(&quot;Are you sure you want to logout? (Y\\N)&quot;);</b>
+<b class="fc">&nbsp;                            String logout = sc.nextLine();</b>
+<b class="fc">&nbsp;                            if (logout.equals(&quot;Y&quot;)) {</b>
+<b class="fc">&nbsp;                                System.out.println(&quot;Logged out succesfully!&quot;);</b>
+&nbsp;                            } else {
+<b class="fc">&nbsp;                                System.out.println(&quot;Still logged in!&quot;);</b>
+<b class="fc">&nbsp;                                choice=-1;</b>
+&nbsp;                            }
+<b class="fc">&nbsp;                        } else {</b>
+<b class="fc">&nbsp;                            String query = &quot;select curr_year,curr_sem from admin&quot;;</b>
+<b class="fc">&nbsp;                            int curr_year = 0;</b>
+<b class="fc">&nbsp;                            int curr_sem = 0;</b>
+&nbsp;                            try {
+<b class="fc">&nbsp;                                Statement stmt = c.createStatement();</b>
+<b class="fc">&nbsp;                                ResultSet rs = stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;                                if (rs.next() != false) {</b>
+<b class="fc">&nbsp;                                    curr_year = rs.getInt(&quot;curr_year&quot;);</b>
+<b class="fc">&nbsp;                                    curr_sem = rs.getInt(&quot;curr_sem&quot;);</b>
+&nbsp;                                }
+<b class="fc">&nbsp;                                stmt.close();</b>
+<b class="nc">&nbsp;                            } catch (Exception e) {</b>
+<b class="nc">&nbsp;                                System.err.println(e.getClass().getName() + &quot;: &quot; + e.getMessage());</b>
+<b class="fc">&nbsp;                            }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;                            switch (login_index) {</b>
+&nbsp;                                case 1:
+<b class="fc">&nbsp;                                    StudentChoices studentSelect = new StudentChoices();</b>
+&nbsp;                                    //studentSelect.choices(choice,c);
+<b class="fc">&nbsp;                                    if(choice==1){</b>
+<b class="fc">&nbsp;                                        studentSelect.profile(login_id);</b>
+<b class="fc">&nbsp;                                    }else if(choice==2){</b>
+<b class="fc">&nbsp;                                        studentSelect.viewEnrolled(login_id);</b>
+<b class="fc">&nbsp;                                    }else if (choice == 3) {</b>
+<b class="fc">&nbsp;                                        studentSelect.viewOfferings();</b>
+<b class="fc">&nbsp;                                    }else if(choice==4){</b>
+<b class="fc">&nbsp;                                        studentSelect.enroll(login_id,curr_year,curr_sem);</b>
+<b class="fc">&nbsp;                                    }else if(choice==5 ){</b>
+<b class="fc">&nbsp;                                        studentSelect.dropAudit(login_id);</b>
+<b class="fc">&nbsp;                                    }else if(choice==6){</b>
+<b class="fc">&nbsp;                                        studentSelect.getGrades(login_id);</b>
+&nbsp;                                    }
+&nbsp;                                    break;
+&nbsp;                                case 2:
+<b class="fc">&nbsp;                                    FacultyChoices facultySelect = new FacultyChoices();</b>
+<b class="fc">&nbsp;                                    if(choice==1){</b>
+<b class="fc">&nbsp;                                        facultySelect.profile(login_id);</b>
+<b class="fc">&nbsp;                                    }else if (choice == 2) {</b>
+<b class="fc">&nbsp;                                        facultySelect.viewCourseCatalog();</b>
+<b class="fc">&nbsp;                                    } else if (choice == 3) {</b>
+<b class="fc">&nbsp;                                        facultySelect.offerCourse(login_id, curr_year, curr_sem);</b>
+<b class="fc">&nbsp;                                    }else if(choice==4){</b>
+<b class="fc">&nbsp;                                        Common commonSelect=new Common();</b>
+<b class="fc">&nbsp;                                        commonSelect.viewGrades(curr_year);</b>
+<b class="fc">&nbsp;                                    }else if(choice==5){</b>
+<b class="fc">&nbsp;                                        facultySelect.enterGrades(login_id);</b>
+<b class="fc">&nbsp;                                    }else if(choice==6){</b>
+<b class="fc">&nbsp;                                        facultySelect.viewOfferedCourses(login_id);</b>
+&nbsp;                                    }
+&nbsp;                                    break;
+&nbsp;                                case 3:
+<b class="fc">&nbsp;                                    AdminChoices adminSelect = new AdminChoices();</b>
+<b class="fc">&nbsp;                                    if(choice==1){</b>
+<b class="fc">&nbsp;                                        adminSelect.profile(login_id);</b>
+<b class="fc">&nbsp;                                    }else if (choice == 2) {</b>
+<b class="fc">&nbsp;                                        adminSelect.addCourse();</b>
+<b class="fc">&nbsp;                                    } else if(choice==3){</b>
+<b class="fc">&nbsp;                                        adminSelect.editCourseCatalog();</b>
+<b class="fc">&nbsp;                                    }else if (choice == 4) {</b>
+<b class="fc">&nbsp;                                        Common commonSelect=new Common();</b>
+<b class="fc">&nbsp;                                        commonSelect.viewGrades(curr_year);</b>
+<b class="fc">&nbsp;                                    }else if(choice==5){</b>
+<b class="fc">&nbsp;                                        int flag=adminSelect.endSemester(curr_year,curr_sem);</b>
+<b class="fc">&nbsp;                                        if(flag==1){</b>
+<b class="fc">&nbsp;                                            Common commonSelect=new Common();</b>
+<b class="fc">&nbsp;                                            commonSelect.calculateGrade();</b>
+&nbsp;                                        }
+<b class="fc">&nbsp;                                    }else if(choice==6){</b>
+<b class="fc">&nbsp;                                        adminSelect.gradesheet(curr_year,curr_sem);</b>
+<b class="fc">&nbsp;                                    }else if(choice==7){</b>
+<b class="fc">&nbsp;                                        adminSelect.graduationStatus(curr_year,curr_sem);</b>
+&nbsp;                                    }
+&nbsp;                                    break;
+&nbsp;
+&nbsp;                            }
+&nbsp;                        }
+<b class="fc">&nbsp;                    }while(choice!=0);</b>
+&nbsp;
+&nbsp;
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;        }while(login_index!=0);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 04:34</div>
+</div>
+</body>
+</html>

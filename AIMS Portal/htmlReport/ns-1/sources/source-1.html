@@ -1,0 +1,406 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AdminChoices</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: AdminChoices (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AdminChoices</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.6%
+  </span>
+  <span class="absValue">
+    (215/225)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;import java.io.File;
+&nbsp;import java.io.FileWriter;
+&nbsp;import java.sql.ResultSet;
+&nbsp;import java.sql.Statement;
+&nbsp;import java.util.*;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.*;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;class AdminChoices {</b>
+&nbsp;
+&nbsp;
+&nbsp;    public void addCourse() {
+<b class="fc">&nbsp;        ConnectDB conn=new ConnectDB();</b>
+<b class="fc">&nbsp;        Connection c=conn.connect();</b>
+<b class="fc">&nbsp;        Scanner sc=new Scanner(System.in);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Enter course details.&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Course code:&quot;);</b>
+&nbsp;
+&nbsp;        try{
+<b class="fc">&nbsp;            String courseCode = sc.nextLine();</b>
+<b class="fc">&nbsp;            String query=&quot;select * from course_catalog where course_code=\&#39;&quot;+courseCode+&quot;\&#39;;&quot;;</b>
+<b class="fc">&nbsp;            Statement s=c.createStatement();</b>
+<b class="fc">&nbsp;            ResultSet rs=s.executeQuery(query);</b>
+<b class="fc">&nbsp;            if(rs.next()!=false){</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Course with the same code already exists!&quot;);</b>
+<b class="fc">&nbsp;                c.close();</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;        System.out.println(&quot;Course name:&quot;);</b>
+<b class="fc">&nbsp;        String courseName = sc.nextLine();</b>
+<b class="fc">&nbsp;        System.out.println(&quot;No. of lectures per week:&quot;);</b>
+<b class="fc">&nbsp;        int lValue = sc.nextInt();</b>
+<b class="fc">&nbsp;        System.out.println(&quot;T:&quot;);</b>
+<b class="fc">&nbsp;        int tValue = sc.nextInt();</b>
+<b class="fc">&nbsp;        System.out.println(&quot;P:&quot;);</b>
+<b class="fc">&nbsp;        int pValue = sc.nextInt();</b>
+<b class="fc">&nbsp;        String random=sc.nextLine();</b>
+<b class="fc">&nbsp;        System.out.println(random);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Do you want to specify the years for which the course is? (Y\\N)&quot;);</b>
+<b class="fc">&nbsp;        String yesNo=sc.nextLine();</b>
+<b class="fc">&nbsp;        System.out.println(yesNo);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; years=new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        if(yesNo.equals(&quot;Y&quot;)){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Enter the years one by one, enter 0 when u wish to not enter a year anymore&quot;);</b>
+&nbsp;            int year;
+&nbsp;            do{
+<b class="fc">&nbsp;                year=sc.nextInt();</b>
+<b class="fc">&nbsp;                if(year!=0){</b>
+<b class="fc">&nbsp;                    years.add(year);</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }while(year!=0);</b>
+<b class="fc">&nbsp;            random=sc.nextLine();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        System.out.println(&quot;Do you want to specify the sem for which the course is? (Y\\N)&quot;);</b>
+<b class="fc">&nbsp;        yesNo=sc.nextLine();</b>
+<b class="fc">&nbsp;        int sem=0;</b>
+<b class="fc">&nbsp;        if(yesNo.equals(&quot;Y&quot;)){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;press 1 for sem 1, press 2 for sem 2, press 0 for both sems:&quot;);</b>
+<b class="fc">&nbsp;            sem=sc.nextInt();</b>
+<b class="fc">&nbsp;            random = sc.nextLine();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        System.out.println(&quot;Any prerequisites? (Y\\N) &quot;);</b>
+<b class="fc">&nbsp;        yesNo=sc.nextLine();</b>
+<b class="fc">&nbsp;        String preReq=&quot;&quot;;</b>
+<b class="fc">&nbsp;        if(yesNo.equals(&quot;Y&quot;)){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Enter all the pre-requisites in a single line without spaces and seperated with a &#39;,&#39;&quot;);</b>
+<b class="fc">&nbsp;            preReq = sc.nextLine();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        System.out.println(&quot;Department &quot;);</b>
+<b class="fc">&nbsp;        String department = sc.nextLine();</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Type&quot;);</b>
+<b class="fc">&nbsp;        String type = sc.nextLine();</b>
+<b class="fc">&nbsp;        query = &quot;insert into course_catalog values (?,?,?,?,?,?,?,?,?,?,?);&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;            PreparedStatement stmt = c.prepareStatement(query);</b>
+<b class="fc">&nbsp;            stmt.setString(1, courseCode);</b>
+<b class="fc">&nbsp;            stmt.setString(2, courseName);</b>
+<b class="fc">&nbsp;            stmt.setInt(3, lValue);</b>
+<b class="fc">&nbsp;            stmt.setInt(4, tValue);</b>
+<b class="fc">&nbsp;            stmt.setInt(5, pValue);</b>
+<b class="fc">&nbsp;            stmt.setString(6, preReq);</b>
+<b class="fc">&nbsp;            stmt.setString(7, department);</b>
+<b class="fc">&nbsp;            stmt.setString(8, type);</b>
+<b class="fc">&nbsp;            stmt.setInt(9, (lValue+pValue)/2);</b>
+<b class="fc">&nbsp;            stmt.setArray(10, c.createArrayOf(&quot;INT&quot;,years.toArray()));</b>
+<b class="fc">&nbsp;            stmt.setInt(11, sem);</b>
+<b class="fc">&nbsp;            int count = stmt.executeUpdate();</b>
+<b class="fc">&nbsp;            c.commit();</b>
+<b class="fc">&nbsp;            if (count == 1) {</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Course added successfully!&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;error&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            stmt.close();</b>
+<b class="fc">&nbsp;            c.close();</b>
+<b class="fc">&nbsp;        } catch (Exception e) {</b>
+<b class="fc">&nbsp;            System.err.println(e.getClass().getName() + &quot;: &quot; + e.getMessage());</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;        return;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void editCourseCatalog() {
+<b class="fc">&nbsp;        ConnectDB conn=new ConnectDB();</b>
+<b class="fc">&nbsp;        Connection c=conn.connect();</b>
+<b class="fc">&nbsp;        Scanner sc=new Scanner(System.in);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Enter the course code of the course you wish to edit: &quot;);</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            String course_code = sc.nextLine();</b>
+<b class="fc">&nbsp;            String query = &quot;select * from course_catalog where course_code=\&#39;&quot; + course_code + &quot;\&#39;;&quot;;</b>
+<b class="fc">&nbsp;            Statement stmt = c.createStatement();</b>
+<b class="fc">&nbsp;            ResultSet rs = stmt.executeQuery(query);</b>
+&nbsp;
+<b class="fc">&nbsp;            if (rs.next() == false) {</b>
+<b class="fc">&nbsp;                System.out.println(&quot;There is no course with this code!&quot;);</b>
+<b class="fc">&nbsp;                stmt.close();</b>
+<b class="fc">&nbsp;                c.close();</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                System.out.println(&quot;&quot;);</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Enter new name&quot;);</b>
+<b class="fc">&nbsp;                String course_name = sc.nextLine();</b>
+<b class="fc">&nbsp;                query = &quot;update course_catalog set course_name=? where course_code=?&quot;;</b>
+<b class="fc">&nbsp;                PreparedStatement st = c.prepareStatement(query);</b>
+<b class="fc">&nbsp;                st.setString(1, course_name);</b>
+<b class="fc">&nbsp;                st.setString(2, course_code);</b>
+<b class="fc">&nbsp;                int count = st.executeUpdate();</b>
+<b class="fc">&nbsp;                c.commit();</b>
+<b class="fc">&nbsp;                if (count == 1) {</b>
+<b class="fc">&nbsp;                    System.out.println(&quot;Course name updated successfully!&quot;);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;error&quot;);</b>
+&nbsp;                }
+<b class="fc">&nbsp;                st.close();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            c.close();</b>
+<b class="fc">&nbsp;        }catch(Exception e){</b>
+<b class="fc">&nbsp;            System.err.println(e.getClass().getName() + &quot;: &quot; + e.getMessage());</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int endSemester(int curr_year, int curr_sem){
+<b class="fc">&nbsp;        ConnectDB conn=new ConnectDB();</b>
+<b class="fc">&nbsp;        Connection c=conn.connect();</b>
+<b class="fc">&nbsp;        Scanner sc=new Scanner(System.in);</b>
+<b class="fc">&nbsp;        int flag=0;</b>
+&nbsp;        try{
+<b class="fc">&nbsp;            String query=&quot;select * from enrollments where grade=11&quot;;</b>
+<b class="fc">&nbsp;            Statement stmt=c.createStatement();</b>
+<b class="fc">&nbsp;            ResultSet rs=stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;            if(rs.next()!=false){</b>
+<b class="fc">&nbsp;                System.out.println(&quot;The semester cannot be ended as some students have yet to be graded!&quot;);</b>
+<b class="fc">&nbsp;                flag=0;</b>
+&nbsp;            }else{
+<b class="fc">&nbsp;                query=&quot;update admin set curr_year=?, curr_sem=?;&quot;;</b>
+<b class="fc">&nbsp;                PreparedStatement st=c.prepareStatement(query);</b>
+<b class="fc">&nbsp;                if(curr_sem==1){</b>
+<b class="fc">&nbsp;                    st.setInt(1,curr_year);</b>
+<b class="fc">&nbsp;                    st.setInt(2,2);</b>
+&nbsp;                }else{
+<b class="fc">&nbsp;                    st.setInt(1,curr_year+1);</b>
+<b class="fc">&nbsp;                    st.setInt(2,1);</b>
+&nbsp;                }
+<b class="fc">&nbsp;                int count=st.executeUpdate();</b>
+<b class="fc">&nbsp;                if(count==0){</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;error&quot;);</b>
+<b class="nc">&nbsp;                    flag=0;</b>
+&nbsp;                }else{
+<b class="fc">&nbsp;                    System.out.println(&quot;Sem change successfull&quot;);</b>
+<b class="fc">&nbsp;                    flag=1;</b>
+&nbsp;                }
+<b class="fc">&nbsp;                c.commit();</b>
+<b class="fc">&nbsp;                st.close();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            stmt.close();</b>
+<b class="fc">&nbsp;            c.close();</b>
+<b class="nc">&nbsp;        }catch(Exception e){</b>
+<b class="nc">&nbsp;            System.err.println(e.getClass().getName() + &quot;: &quot; + e.getMessage());</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return flag;</b>
+&nbsp;    }
+&nbsp;    public void gradesheet(int curr_year, int curr_sem) {
+<b class="fc">&nbsp;        ConnectDB conn=new ConnectDB();</b>
+<b class="fc">&nbsp;        Connection c=conn.connect();</b>
+<b class="fc">&nbsp;        Scanner sc=new Scanner(System.in);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Enter the loginid of the student whose gradesheet/transcript you wish to generate&quot;);</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            String loginid = sc.nextLine();</b>
+<b class="fc">&nbsp;            int student_year = 0;</b>
+<b class="fc">&nbsp;            String query = &quot;select * from student where loginid=\&#39;&quot; + loginid + &quot;\&#39;;&quot;;</b>
+<b class="fc">&nbsp;            Statement stmt = c.createStatement();</b>
+<b class="fc">&nbsp;            ResultSet rs = stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;            if (rs.next() == false) {</b>
+<b class="fc">&nbsp;                System.out.println(&quot;there is no student with this id&quot;);</b>
+<b class="fc">&nbsp;                stmt.close();</b>
+<b class="fc">&nbsp;                c.close();</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="fc">&nbsp;            student_year = curr_year - rs.getInt(&quot;enrollment_year&quot;) + 1;</b>
+<b class="fc">&nbsp;            String gradesheet = loginid + &quot;gradeSheet.txt&quot;;</b>
+<b class="fc">&nbsp;            File myObj = new File(gradesheet);</b>
+<b class="fc">&nbsp;            myObj.createNewFile();</b>
+<b class="fc">&nbsp;            FileWriter fWriter = new FileWriter(gradesheet);</b>
+<b class="fc">&nbsp;            fWriter.write(&quot;Name: &quot;+rs.getString(&quot;name&quot;)+&quot;\n&quot;);</b>
+<b class="fc">&nbsp;            fWriter.write(&quot;ID: &quot;+rs.getString(&quot;loginid&quot;)+&quot;\n&quot;);</b>
+<b class="fc">&nbsp;            fWriter.write(&quot;Total credits: &quot;+rs.getString(&quot;total_credits&quot;)+&quot;\n&quot;);</b>
+<b class="fc">&nbsp;            fWriter.write(&quot;CG: &quot;+rs.getString(&quot;grade&quot;)+&quot;\n&quot;);</b>
+<b class="fc">&nbsp;            for (int i = 1; i &lt; student_year; i++) {</b>
+<b class="fc">&nbsp;                query = &quot;select e.course_code, e.grade, c.course_name from enrollments e inner join course_catalog c on c.course_code=e.course_code where student_id=\&#39;&quot; + loginid + &quot;\&#39; and e.year=&quot; + i + &quot; and e.sem=1;&quot;;</b>
+<b class="fc">&nbsp;                rs = stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;                fWriter.write(&quot;\nyear=&quot; + i + &quot;, sem=1\n&quot;);</b>
+<b class="fc">&nbsp;                while (rs.next() != false) {</b>
+<b class="fc">&nbsp;                    fWriter.write(rs.getString(&quot;course_code&quot;) + &quot;  &quot; + rs.getString(&quot;course_name&quot;) + &quot;  &quot; + rs.getInt(&quot;grade&quot;) + &quot;\n&quot;);</b>
+&nbsp;                }
+<b class="fc">&nbsp;                query = &quot;select e.course_code, e.grade, c.course_name from enrollments e inner join course_catalog c on c.course_code=e.course_code where student_id=\&#39;&quot; + loginid + &quot;\&#39; and e.year=&quot; + i + &quot; and e.sem=2;&quot;;</b>
+<b class="fc">&nbsp;                rs = stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;                fWriter.write(&quot;\nyear=&quot; + i + &quot;, sem=2\n&quot;);</b>
+<b class="fc">&nbsp;                while (rs.next() != false) {</b>
+<b class="fc">&nbsp;                    fWriter.write(rs.getString(&quot;course_code&quot;) + &quot;  &quot; + rs.getString(&quot;course_name&quot;) + &quot;  &quot; + rs.getInt(&quot;grade&quot;) + &quot;\n&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;            stmt.close();</b>
+<b class="fc">&nbsp;            if (curr_sem == 2) {</b>
+<b class="fc">&nbsp;                query = &quot;select e.course_code, e.grade, c.course_name from enrollments e inner join course_catalog c on c.course_code=e.course_code where student_id=\&#39;&quot; + loginid + &quot;\&#39; and e.year=&quot; + student_year + &quot; and e.sem=1;&quot;;</b>
+<b class="fc">&nbsp;                stmt = c.createStatement();</b>
+<b class="fc">&nbsp;                rs = stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;                fWriter.write(&quot;\nyear=&quot; + student_year + &quot;, sem=1\n&quot;);</b>
+<b class="fc">&nbsp;                while (rs.next() != false) {</b>
+<b class="fc">&nbsp;                    fWriter.write(rs.getString(&quot;course_code&quot;) + &quot;  &quot; + rs.getString(&quot;course_name&quot;) + &quot;  &quot; + rs.getInt(&quot;grade&quot;) + &quot;\n&quot;);</b>
+&nbsp;                }
+<b class="fc">&nbsp;                stmt.close();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            System.out.println(&quot;Gradesheet creates successfully. Exit portal to view.&quot;);</b>
+<b class="fc">&nbsp;            fWriter.close();</b>
+<b class="fc">&nbsp;            c.close();</b>
+<b class="fc">&nbsp;        } catch (Exception e) {</b>
+<b class="fc">&nbsp;            System.out.println(e.getClass().getName() + &quot;: &quot; + e.getMessage());</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    public void graduationStatus(int curr_year, int curr_sem){
+<b class="fc">&nbsp;        ConnectDB conn=new ConnectDB();</b>
+<b class="fc">&nbsp;        Connection c=conn.connect();</b>
+<b class="fc">&nbsp;        Scanner sc=new Scanner(System.in);</b>
+&nbsp;        try{
+<b class="fc">&nbsp;        if(curr_sem==2){</b>
+<b class="fc">&nbsp;            System.out.println(&quot;The even sem is ongoing , no student is set to graduate now!&quot;);</b>
+<b class="fc">&nbsp;            c.close();</b>
+&nbsp;            return;
+&nbsp;        }
+<b class="fc">&nbsp;        int student_year=curr_year-4;</b>
+&nbsp;
+<b class="fc">&nbsp;            String query=&quot;select grade, total_credits, pe_credit, pc_credit, oe_credit, name from student where enrollment_year=&quot;+student_year+&quot; order by name&quot;;</b>
+<b class="fc">&nbsp;            Statement stmt=c.createStatement();</b>
+<b class="fc">&nbsp;            ResultSet rs=stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;            int i=0;</b>
+<b class="fc">&nbsp;            while(rs.next()!=false){</b>
+<b class="fc">&nbsp;                double total_credits=rs.getDouble(&quot;total_credits&quot;);</b>
+<b class="fc">&nbsp;                double pc_credit=rs.getDouble(&quot;pc_credit&quot;);</b>
+<b class="fc">&nbsp;                double pe_credit=rs.getDouble(&quot;pe_credit&quot;);</b>
+<b class="fc">&nbsp;                double oe_credit=rs.getDouble(&quot;oe_credit&quot;);</b>
+<b class="fc">&nbsp;                double grade=rs.getDouble(&quot;grade&quot;);</b>
+<b class="fc">&nbsp;                    if(total_credits&gt;=145 &amp;&amp; pc_credit&gt;=60 &amp;&amp; pe_credit&gt;=45 &amp;&amp; oe_credit&gt;=40 &amp;&amp; grade&gt;=5 ){</b>
+<b class="fc">&nbsp;                        i++;</b>
+<b class="fc">&nbsp;                        System.out.println(rs.getString(&quot;name&quot;)+&quot;        can graduate&quot;);</b>
+&nbsp;                    }else{
+<b class="fc">&nbsp;                        System.out.println(rs.getString(&quot;name&quot;)+&quot;        cannot graduate&quot;);</b>
+&nbsp;                    }
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Only &quot;+i+&quot; number of students are set to graduate&quot;);</b>
+<b class="fc">&nbsp;            stmt.close();</b>
+<b class="fc">&nbsp;            c.close();</b>
+<b class="nc">&nbsp;        }catch(Exception e){</b>
+<b class="nc">&nbsp;            System.out.println(e);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void profile(String loginid){
+<b class="fc">&nbsp;        ConnectDB conn=new ConnectDB();</b>
+<b class="fc">&nbsp;        Connection c=conn.connect();</b>
+<b class="fc">&nbsp;        Scanner sc=new Scanner(System.in);</b>
+&nbsp;        try{
+<b class="fc">&nbsp;            String query=&quot;select * from admin where loginid=\&#39;&quot;+loginid+&quot;\&#39;;&quot;;</b>
+<b class="fc">&nbsp;            Statement stmt=c.createStatement();</b>
+<b class="fc">&nbsp;            ResultSet rs=stmt.executeQuery(query);</b>
+<b class="fc">&nbsp;            if(rs.next()!=false){</b>
+<b class="fc">&nbsp;                System.out.println(&quot;login id: &quot;+rs.getString(&quot;loginid&quot;));</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Current year: &quot;+rs.getInt(&quot;curr_year&quot;));</b>
+<b class="fc">&nbsp;                System.out.println(&quot;Current sem: &quot;+rs.getInt(&quot;curr_sem&quot;));</b>
+&nbsp;            }
+<b class="fc">&nbsp;            stmt.close();</b>
+<b class="fc">&nbsp;            c.close();</b>
+<b class="nc">&nbsp;        }catch(Exception e){</b>
+<b class="nc">&nbsp;            System.out.println(e);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 04:34</div>
+</div>
+</body>
+</html>
